@@ -1,7 +1,7 @@
 # 디폴트 무시된 파일
 /shelf/
 /workspace.xml
-__pycache__/
+
 *.py[cod]
 *$py.class
 
@@ -29,3 +29,5 @@ node_modules/
 dump.rdb
 
 .DS_Store
+
+__pycache__/
