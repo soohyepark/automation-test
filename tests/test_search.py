@@ -88,6 +88,4 @@ def test_search():
         worksheet = connect_google_sheet(json_file_path, spreadsheet_url, worksheet_name)
         log_result(worksheet, test_name, status, remarks)
 
-        # driver.quit()
-
 test_search()
