@@ -30,20 +30,6 @@ def get_driver():
 # # 요소 클릭
 # element = driver.find_element(By.ID, 'com.ebay.kr.gmarket:id/appPermissionBtn')
 # element.click()
-# # 알림 처리 allow?
-# element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'com.android.permissioncontroller:id/permission_allow_button')))
-# element.click()
-# # 알림 처리 don't allow
-# # element = driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button')
-# # element.click()
-# # 하단 팝업 닫기
-# element = driver.find_element(By.ID, 'com.ebay.kr.gmarket:id/iv_plus')
-# element.click()
-# # 검색 버튼 클릭
-# time.sleep(2)
-# element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'com.ebay.kr.gmarket:id/btn_search')))
-# element.click()
-# print("검색버튼 누르기 실패")
 
 # # 테스트 종료
 # driver.quit()
