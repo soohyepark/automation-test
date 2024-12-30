@@ -94,15 +94,15 @@ def test_1(driver):
             json_data[0]["tc1"]["value1"],
             json_data[0]["tc1"]["value2"]
         )
-        update_test_result(worksheet, 1, "pass")
+        input_pass(1)
     except Exception as e:
-        update_test_result(worksheet, 1, "fail", str(e))
+        input_fail(1, e)
 
 def test_2(driver):
     home_page = HomePage(driver)
     try:
         # Test Case 2
         home_page.input_move_login_screen(json_data[0]["tc2"]["use_type"])
-        update_test_result(worksheet, 2, "pass")
+        input_pass(2)
     except Exception as e:
-        update_test_result(worksheet, 2, "fail", str(e))
+        input_fail(2, e)

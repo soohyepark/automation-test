@@ -12,7 +12,7 @@ def driver():
     os_version = platform.platform()
     if 'Windows' in os_version:  # windows인 경우
         options = UiAutomator2Options()
-        app_path = os.path.abspath("C:/APK/GmarketMobile-debugFinal-20241202_160338.apk")
+        app_path = os.path.abspath("C:/APK/GmarketMobile.apk")
         options.PlatformName = "Android"
         options.deviceName = "AOS14"  # 에뮬레이터 또는 실제 장치의 이름
         options.app = app_path  # 앱의 APK 파일 경로
@@ -22,7 +22,7 @@ def driver():
 
     elif 'mac' in os_version:
         options = UiAutomator2Options()
-        app_path = os.path.abspath("/Users/soohyepark/apk/GmarketMobile-debugFinal-20241202_160338.apk")
+        app_path = os.path.abspath("/Users/soohyepark/apk/GmarketMobile.apk")
         options.platformName = "Android"
         options.deviceName = "AOS14"  # 에뮬레이터 또는 실제 장치의 이름
         options.app = app_path  # 앱의 APK 파일 경로
