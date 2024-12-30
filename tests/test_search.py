@@ -66,10 +66,6 @@ def test_search():
         assert value in goods_name, f"'{value}' not found in '{goods_name}'"
         print("#", runtext, "종료")
 
-        # element = WebDriverWait(driver, 10).until(
-        #     EC.presence_of_element_located((By.ID, 'com.ebay.kr.gmarket:id/goSearchBtn')))
-        # element.click()
-
         test_name = "Search Test"
         status = "PASS"
         remarks = "검색 성공"

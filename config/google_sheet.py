@@ -1,40 +1,61 @@
+import pydata_google_auth
 import gspread
+import json
+import os
+import platform
 
-def connect_google_sheet(json_file_path, spreadsheet_url, worksheet_name):
+# 구글 인증 및 스프레드시트 연결
+SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
+credentials = pydata_google_auth.get_user_credentials(SCOPES, auth_local_webserver=True)
+credentials.access_token = credentials.token
+google_client = gspread.authorize(credentials)
+
+
+def load_worksheet(spreadsheet_url, worksheet_name):
     """
-    구글 스프레드시트에 연결하여 원하는 워크시트를 반환합니다.
-    :param json_file_path: 서비스 계정 JSON 파일 경로
-    :param spreadsheet_url: 구글 스프레드시트 URL
-    :param worksheet_name: 워크시트 이름
-    :return: 워크시트 객체
+    구글 스프레드시트에서 워크시트를 로드합니다.
     """
-    # gspread를 사용한 서비스 계정 인증
-    client = gspread.service_account(json_file_path)
+    spreadsheet = google_client.open_by_url(spreadsheet_url)
+    return spreadsheet.worksheet(worksheet_name)
 
-    # 스프레드시트 URL로 문서 열기
-    spreadsheet = client.open_by_url(spreadsheet_url)
-
-    # 워크시트 선택
-    worksheet = spreadsheet.worksheet(worksheet_name)
-
-    return worksheet
-
-
-def log_result(worksheet, test_name, status, remarks=""):
+def update_test_result(worksheet, sheet_num, use_type, status=None, remarks=""):
     """
-    테스트 결과를 구글 시트에 기록합니다.
-    :param worksheet: 워크시트 객체
-    :param test_name: 테스트 이름
-    :param status: PASS 또는 FAIL
-    :param remarks: 추가 메모
+    테스트 결과를 업데이트합니다.
+    :param worksheet: 구글 스프레드시트 워크시트 객체
+    :param sheet_num: 테스트 케이스 번호
+    :param use_type: JSON 데이터의 use_type 값
+    :param status: 상태("pass", "fail", "untest") (기본값은 None)
+    :param remarks: 추가 메모 (기본값은 빈 문자열)
     """
-    # 데이터를 기록할 위치 설정 (현재 시트의 마지막 행에 추가)
-    # 워크시트에서 마지막 행 번호 찾기
-    last_row = len(worksheet.get_all_values()) + 1  # 마지막 행 번호 (헤더 제외)
+    # 상태가 명시되지 않은 경우 use_type에 따라 상태 결정
+    if status is None:
+        if use_type == 2:
+            status = "pass"
+            color = {"red": 0.0, "green": 0.5, "blue": 0.0}  # 초록색
+        else:
+            status = "untest"
+            color = {"red": 0.5, "green": 0.5, "blue": 0.5}  # 회색
+    elif status == "fail":
+        color = {"red": 1.0, "green": 0.0, "blue": 0.0}  # 빨간색
 
-    # 기록할 데이터 준비
-    row_data = [test_name, status, remarks]
+    # 테스트 결과 기록
+    worksheet.update([[status]], f"D{sheet_num + 2}")
+    worksheet.format(f"D{sheet_num + 2}", {"textFormat": {"foregroundColor": color, "bold": True}})
 
-    # 데이터 업데이트 (A열부터 C열까지 업데이트)
-    worksheet.update(f'A{last_row}:C{last_row}', [row_data])
-    print(f"✅ 테스트 결과 기록됨: {test_name} - {status}")
+    # 비고란 업데이트
+    worksheet.update([[remarks]], f"E{sheet_num + 2}")
+
+# def update_test_result(worksheet, sheet_num, status, remarks=""):
+#     """
+#     테스트 결과를 업데이트합니다.
+#     """
+#     if status == "pass":
+#         color = {"red": 0.0, "green": 0.5, "blue": 0.0}
+#     elif status == "fail":
+#         color = {"red": 1.0, "green": 0.0, "blue": 0.0}
+#     else:  # untest
+#         color = {"red": 0.5, "green": 0.5, "blue": 0.5}
+#
+#     worksheet.update([["untest" if status == "untest" else status]], f"D{sheet_num + 2}")
+#     worksheet.format(f"D{sheet_num + 2}", {"textFormat": {"foregroundColor": color, "bold": True}})
+#     worksheet.update([[remarks]], f"E{sheet_num + 2}")

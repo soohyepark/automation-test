@@ -1,0 +1,24 @@
+[
+    {
+        "tc1": {
+            "use_type": 2,
+            "value1": "위로 가기",
+            "value2": "전체 베스트"
+        },
+        "tc2": {
+            "use_type": 1
+        },
+        "tc3": {
+            "use_type": 1
+        },
+        "tc4": {
+            "use_type": 2
+        },
+        "tc5": {
+            "use_type": 2
+        },
+        "tc6": {
+            "use_type": 2
+        }
+    }
+]
