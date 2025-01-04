@@ -1,7 +1,8 @@
 [
     {
         "tc1": {
-            "use_type": 2
+            "use_type": 2,
+            "value1": "test"
         }
     }
 ]

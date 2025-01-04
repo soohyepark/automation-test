@@ -1,3 +1,5 @@
+from xml.etree.ElementPath import xpath_tokenizer
+
 from src.pages.base import *
 
 class HomePage():
@@ -499,7 +501,7 @@ class HomePage():
         :param (list) args[0]: 위로 가기 버튼
         :param (str) args[1]: 전체 베스트 버튼
         :return: 없음
-        :example: gmarket_regression_vip_page_param.ss_1_2_1_1(2,*args)
+        :example: home_page.ss_1_2_1_1(2,*args)
         """
 
         if use_type == 2:
@@ -544,3 +546,100 @@ class HomePage():
 
         else:
             print("#", "BEST 1.2.1-1 Test Case 실행 생략")
+
+    def input_login_account_type(self, use_type, *args):
+        """
+
+        Gmarket 회원 타입별 로그인 진행
+        :param (int) use_type: 1 : 사용 안함, 2: 사용
+        :param (str) args[0]: Gmarket ID
+        :param (str) args[1]: Password
+        :return: 없음
+
+        """
+
+        if use_type == 2:
+            # 로그인 버튼 클릭
+            runtext = '로그인 버튼 클릭'
+            print("#", runtext, "시작")
+            id = "com.ebay.kr.gmarket:id/clSubTitle"
+            element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, id)))
+            element.click()
+            print("#", runtext, "종료")
+
+            runtext = 'log_on_page > 계정 입력'
+            print("#", runtext, "시작")
+            xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View[1]/android.widget.EditText'
+            element = WebDriverWait(self.driver, 40).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            element.send_keys(args[0])
+            print("#", runtext, "종료")
+
+            runtext = 'log_on_page > 비밀 번호 입력'
+            print("#", runtext, "시작")
+            xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View[2]/android.widget.EditText'
+            element = self.driver.find_element(By.XPATH, xpath)
+            element.send_keys(args[1])
+            print("#", runtext, "종료")
+
+            runtext = 'log_on_page > 로그인 버튼 클릭'
+            print("#", runtext, "시작")
+            xpath = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button'
+            element = self.driver.find_element(By.XPATH, xpath)
+            element.click()
+            print("#", runtext, "종료")
+
+            time.sleep(10)
+
+        else:
+            print("#", "로그인 회원 타입 선택 없음")
+            raise
+
+    def ss_1_5_1_1(self, use_type, *args):
+        """
+        1.2.1-1) 베스트 > 기본기능
+        :param (int) use_type: 사용 여부 (1: 미사용 / 2:사용)
+        :param (str) args[0]: 검색어
+        :return: 없음
+        :example: home_page.ss_1_5_1_1(2,*args)
+        """
+
+        if use_type == 2:
+            print("#", "1.5.1-1 Test Case 실행")
+            # 검색 페이지 진입
+            runtext = '검색 페이지 진입'
+            print("#", runtext, "시작")
+            # id = 'com.ebay.kr.gmarket:id/tvSearchBar'
+            # xpath = '//android.widget.RelativeLayout[@content-desc="무엇을 찾아드릴까요?"]'
+            id = 'com.ebay.kr.gmarket:id/rlSearchBar'
+            element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, id)))
+            element.click()
+            print("#", runtext, "종료")
+
+            # 지마켓메인 검색창 텍스트 입력
+            runtext = '메인 페이지 > 검색창 텍스트 입력'
+            print("#", runtext, "시작")
+            id = "com.ebay.kr.gmarket:id/searchEditText"
+            goods_name = args[0]
+            element = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.ID, id)))
+            element.send_keys(goods_name)
+            print("#", runtext, "종료")
+
+            # 지마켓메인 검색창 리턴
+            runtext = '메인 페이지 > 검색창 텍스트 리턴'
+            print("#", runtext, "시작")
+            xpath = '//android.widget.ImageView[@content-desc="입력된 단어로 검색"]'
+            element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            element.click()
+            print("#", runtext, "종료")
+
+            # 입력 및 검색된 텍스트 비교
+            runtext = '메인 페이지 > 검색창 텍스트 리턴 > 입력 및 검색된 텍스트 비교'
+            print("#", runtext, "시작")
+            id = "com.ebay.kr.gmarket:id/searchKeyword"
+            element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, id)))
+            value = element.text
+            assert value in goods_name, f"'{value}' not found in '{goods_name}'"
+            print("#", runtext, "종료")
+
+        else:
+            print("#", "1.5.1-1 Test Case 실행 생략")
