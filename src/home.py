@@ -2,14 +2,10 @@ from xml.etree.ElementPath import xpath_tokenizer
 
 from src.pages.base import *
 
-class HomePage():
-
-    implicit_wait = 10
-    TIMEOUT = 30
+class HomePage(BasePage):
 
     def __init__(self, driver):
-        self.driver = driver
-        self.driver.implicitly_wait(self.implicit_wait)
+        super().__init__(driver)  # 부모 클래스의 초기화 메서드 호출
 
     def __scroll_mobile_app(self, location, xpath, scroll_amount, max_scroll_count):
         """

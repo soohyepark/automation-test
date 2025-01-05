@@ -38,8 +38,5 @@ def driver():
     except Exception as e:
         print(f"Driver initialization failed: {e}")
         raise
-    # while driver == None:
-    #     time.sleep(1)
-    #
-    # driver.start_activity("com.ebay.kr.gmarket","com.ebay.kr.gmarket.eBayKoreaGmarketActivity")
+    
     return driver

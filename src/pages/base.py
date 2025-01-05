@@ -48,8 +48,8 @@ import assertpy
 class BasePage:
     """The basis for all pages."""
 
-    IMPLICIT_WAIT_TIME = 10
-    TIMEOUT = 30
+    IMPLICIT_WAIT_TIME = 10  # 암시적 대기 시간
+    TIMEOUT = 30        # 명시적 대기 시간
 
     def __init__(self, driver):
         """
