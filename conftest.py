@@ -38,5 +38,5 @@ def driver():
     except Exception as e:
         print(f"Driver initialization failed: {e}")
         raise
-    
+
     return driver

@@ -62,7 +62,6 @@ def input_pass(sheet_num):
     # 비고란 초기화
     worksheet.update([[" "]], remarks_position)
 
-
 def input_fail(sheet_num, error_reason):
     """
     테스트 케이스가 실패한 경우 결과를 스프레드시트에 기록합니다.
