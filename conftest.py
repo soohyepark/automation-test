@@ -6,9 +6,9 @@ import platform
 import os
 from appium import webdriver
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def driver():
-    # 디바이스 및 앱 정보 설정pip
+    # 디바이스 및 앱 정보 설정
     os_version = platform.platform()
     if 'Windows' in os_version:  # windows인 경우
         options = UiAutomator2Options()
@@ -39,4 +39,7 @@ def driver():
         print(f"Driver initialization failed: {e}")
         raise
 
-    return driver
+    # return driver
+    yield driver
+    # 테스트 종료 후 Appium 서버와 연결 종료
+    driver.quit()
