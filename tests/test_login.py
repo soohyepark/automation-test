@@ -1,4 +1,3 @@
-from config.appium_config import get_driver
 from config.google_sheet import *
 from selenium.webdriver.common.by import By
 from src.home import HomePage

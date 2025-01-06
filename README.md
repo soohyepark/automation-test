@@ -18,7 +18,6 @@ Automation-test
 ## 📂 디렉토리 구조
 automation/
 ├── config/                  # 설정 파일 디렉토리
-│   ├── appium_config.py     # Appium 설정
 │   └── google_sheet.py      # Google Sheets API 연동
 ├── src/                     # 소스 코드
 │   ├── home.py              # 홈 화면 관련 자동화 로직
@@ -29,7 +28,7 @@ automation/
 ├── tests/                   # 테스트 스크립트
 │   ├── test_home_section.py # 홈섹션 테스트 케이스
 │   ├── test_search.py       # 검색 테스트 케이스
-└── conftest.py              # Pytest 설정 및 공통 픽스처
+└── conftest.py              # Pytest/Appium 설정 및 공통 픽스처
 
 ## 🛠️ 사용 기술 스택
 - Python 3.11
